@@ -1,0 +1,5 @@
+.gradle/
+.idea/
+IvasList/build/
+IvasList/libs/
+local.properties
