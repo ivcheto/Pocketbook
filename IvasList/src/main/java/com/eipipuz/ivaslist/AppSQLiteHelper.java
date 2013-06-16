@@ -18,9 +18,9 @@ public class AppSQLiteHelper extends SQLiteOpenHelper {
     public static final String TAGS_NAME = "tag_name";
     public static final String[] TAGS_COLUMNS = {TAGS_ID, TAGS_NAME};
 
-    public static final String TAG_CREATE = "create table " + TAGS_TABLE + "(" + TAGS_ID +
+    private static final String TAG_CREATE = "create table " + TAGS_TABLE + "(" + TAGS_ID +
             " integer primary key autoincrement, " + TAGS_NAME + " text not null);";
-    public static final String TAG_DELETE = "drop table if exists " + TAGS_TABLE;
+    private static final String TAG_DELETE = "drop table if exists " + TAGS_TABLE;
 
     public AppSQLiteHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);

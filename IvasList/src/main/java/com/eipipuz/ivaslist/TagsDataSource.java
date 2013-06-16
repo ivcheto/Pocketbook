@@ -37,10 +37,11 @@ public class TagsDataSource {
         int newId = (int)mDatabase.insert(AppSQLiteHelper.TAGS_TABLE, null, values);
 
         if (newId == -1) {
-            Log.e(LOG_TAG, "Cannot creat new tag: " + tagName);
+            Log.e(LOG_TAG, "Cannot create new tag: " + tagName);
             return null;
         }
 
+        //noinspection UnnecessaryLocalVariable
         Tag newTag = new Tag(newId, tagName);
         return newTag;
     }

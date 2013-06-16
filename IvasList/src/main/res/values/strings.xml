@@ -3,8 +3,11 @@
 
     <string name="app_name">Iva\'s List</string>
     <string name="action_search">Search</string>
-    <string name="hello_world">Hello world!</string>
     <string name="tags_label">Tags</string>
     <string name="add_tag_button">New</string>
+    <string name="add_tag_title">Add Tag</string>
+    <string name="add_tag_ok_button">@android:string/ok</string>
+    <string name="add_tag_cancel_button">@android:string/cancel</string>
+    <string name="tag_name_hint">Name of the tag</string>
 
 </resources>
