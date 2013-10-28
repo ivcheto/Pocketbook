@@ -8,10 +8,7 @@ import android.util.Log;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 
 public class TagsDataSource {
     private static final String LOG_TAG = TagsDataSource.class.getSimpleName();
@@ -49,9 +46,8 @@ public class TagsDataSource {
     public void deleteTag(Tag tag) {
         Log.i(LOG_TAG, "Deleting tag: " + tag.getName());
 
-        mDatabase.delete(AppSQLiteHelper.TAGS_TABLE,
-                AppSQLiteHelper.TAGS_ID + " = " + tag.getId(),
-                null);
+        mDatabase.delete(AppSQLiteHelper.TAGS_TABLE, AppSQLiteHelper.TAGS_ID + " = " + tag.getId(),
+            null);
     }
 
     public List<Tag> getAllTags() {

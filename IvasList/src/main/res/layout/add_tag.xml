@@ -6,7 +6,7 @@
               android:layout_height="match_parent">
     <EditText
             android:id="@+id/tag_name_input"
-            android:inputType="textShortMessage"
+            android:inputType="textShortMessage|textCapSentences|textAutoCorrect"
             android:hint="@string/tag_name_hint"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>

@@ -1,24 +1,31 @@
 package com.eipipuz.ivaslist;
 
+import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.ListActivity;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MotionEvent;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ListView;
 
 import java.sql.SQLException;
 import java.util.List;
 
-import static android.app.AlertDialog.*;
+import static android.app.AlertDialog.Builder;
+import static android.app.AlertDialog.OnClickListener;
 
-public class HomeActivity extends ListActivity {
+public class HomeActivity extends Activity implements View.OnTouchListener {
     private static final String LOG_TAG = HomeActivity.class.getSimpleName();
     private TagsDataSource mTagsDataSource;
+    private GestureDetector mGestureDetector;
+    private AppGestureDetectorListener mAppGestureDetectorListener;
+    private ListView mListView;
+    public View mStartCircle, mEndCircle;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -26,6 +33,9 @@ public class HomeActivity extends ListActivity {
         setContentView(R.layout.activity_home);
 
         mTagsDataSource = new TagsDataSource(this);
+        mAppGestureDetectorListener = new AppGestureDetectorListener(this);
+        mGestureDetector = new GestureDetector(this, mAppGestureDetectorListener);
+        mGestureDetector.setOnDoubleTapListener(mAppGestureDetectorListener);
 
         try {
             mTagsDataSource.open();
@@ -35,15 +45,15 @@ public class HomeActivity extends ListActivity {
         }
 
         final List<Tag> tags = mTagsDataSource.getAllTags();
-        final ArrayAdapter<Tag> adapter = new ArrayAdapter<Tag>(this, R.layout.list_tag, tags);
+        final AppAdapter adapter = new AppAdapter(this, R.layout.list_tag, tags);
 
-        setListAdapter(adapter);
+        mListView = (ListView)findViewById(R.id.list);
+        mListView.setAdapter(adapter);
+        mListView.setOnTouchListener(this);
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(final Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.home, menu);
         return true;
     }
@@ -63,9 +73,8 @@ public class HomeActivity extends ListActivity {
                 final String tagName = editText.getText().toString();
                 final Tag tag = mTagsDataSource.createTag(tagName);
 
-                final ArrayAdapter<Tag> adapter = (ArrayAdapter<Tag>)getListAdapter();
+                final AppAdapter adapter = (AppAdapter)mListView.getAdapter();
                 adapter.add(tag);
-                adapter.notifyDataSetChanged();
             }
         });
         alertDialogBuilder.setNegativeButton(R.string.add_tag_cancel_button, new OnClickListener() {
@@ -79,5 +88,28 @@ public class HomeActivity extends ListActivity {
         alertDialog.show();
 
 
+    }
+
+    @Override
+    public boolean onTouch(View view, MotionEvent motionEvent) {
+        mGestureDetector.onTouchEvent(motionEvent);
+        return super.onTouchEvent(motionEvent);
+    }
+
+    private int mCandidateForDeletion = -1;
+
+    public void markCandidateForDeletion(int candidatePosition) {
+        mCandidateForDeletion = candidatePosition;
+    }
+
+    public void deleteMarkedTag() {
+        if (mCandidateForDeletion != -1) {
+            AppAdapter appAdapter = (AppAdapter) mListView.getAdapter();
+            Tag tag = (Tag) mListView.getAdapter().getItem(mCandidateForDeletion);
+            Log.d(LOG_TAG, "Delete tag " + tag.getName() + " candidate " + mCandidateForDeletion);
+            appAdapter.remove(tag);
+            mTagsDataSource.deleteTag(tag);
+            mCandidateForDeletion = -1;
+        }
     }
 }
