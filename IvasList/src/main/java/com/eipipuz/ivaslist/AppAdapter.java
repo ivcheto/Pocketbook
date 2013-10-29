@@ -6,6 +6,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.List;
@@ -27,8 +28,9 @@ public class AppAdapter extends ArrayAdapter<Tag> {
 
         Tag tag = mItems.get(position);
         if (tag != null) {
-            TextView textView = (TextView)convertView.findViewById(R.id.list_tag_name);
-            if (textView != null) {
+            LinearLayout view = (LinearLayout)convertView.findViewById(R.id.list_tag_body);
+            if (view != null) {
+                TextView textView = (TextView) view.findViewById(R.id.list_tag_name);
                 textView.setText(tag.getName());
             }
         }

@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import java.sql.SQLException;
@@ -58,6 +59,12 @@ public class HomeActivity extends Activity implements View.OnTouchListener {
         return true;
     }
 
+    @Override
+    protected void onDestroy() {
+        mTagsDataSource.close();
+        super.onDestroy();
+    }
+
     public void addTag(final View view) {
         Log.i(LOG_TAG, "create new tag");
 
@@ -69,11 +76,11 @@ public class HomeActivity extends Activity implements View.OnTouchListener {
         alertDialogBuilder.setPositiveButton(R.string.add_tag_ok_button, new OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int id) {
-                EditText editText = (EditText)addTagView.findViewById(R.id.tag_name_input);
+                EditText editText = (EditText) addTagView.findViewById(R.id.tag_name_input);
                 final String tagName = editText.getText().toString();
                 final Tag tag = mTagsDataSource.createTag(tagName);
 
-                final AppAdapter adapter = (AppAdapter)mListView.getAdapter();
+                final AppAdapter adapter = (AppAdapter) mListView.getAdapter();
                 adapter.add(tag);
             }
         });
@@ -86,8 +93,6 @@ public class HomeActivity extends Activity implements View.OnTouchListener {
 
         final AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
-
-
     }
 
     @Override
@@ -105,11 +110,22 @@ public class HomeActivity extends Activity implements View.OnTouchListener {
     public void deleteMarkedTag() {
         if (mCandidateForDeletion != -1) {
             AppAdapter appAdapter = (AppAdapter) mListView.getAdapter();
-            Tag tag = (Tag) mListView.getAdapter().getItem(mCandidateForDeletion);
+            Tag tag = appAdapter.getItem(mCandidateForDeletion);
             Log.d(LOG_TAG, "Delete tag " + tag.getName() + " candidate " + mCandidateForDeletion);
             appAdapter.remove(tag);
             mTagsDataSource.deleteTag(tag);
             mCandidateForDeletion = -1;
+        }
+    }
+
+    public void moveMarkedTag(float xDelta) {
+        if (mCandidateForDeletion != 1) {
+            LinearLayout view = (LinearLayout) mListView.getChildAt(mCandidateForDeletion);
+            if (view != null) {
+                int leftPadding = view.getPaddingLeft();
+                view.setPadding((int) xDelta - leftPadding, 0, 0, 0);
+                view.invalidate();
+            }
         }
     }
 }
