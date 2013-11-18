@@ -1,4 +1,4 @@
-package com.eipipuz.ivaslist;
+package com.nutrino.pocketbook;
 
 import android.view.GestureDetector;
 import android.view.MotionEvent;

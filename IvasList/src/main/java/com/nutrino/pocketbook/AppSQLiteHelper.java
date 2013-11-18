@@ -1,4 +1,4 @@
-package com.eipipuz.ivaslist;
+package com.nutrino.pocketbook;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -8,7 +8,7 @@ import android.util.Log;
 public class AppSQLiteHelper extends SQLiteOpenHelper {
     private static final String LOG_TAG = AppSQLiteHelper.class.getSimpleName();
 
-    private static final String DATABASE_NAME = "ivaslist.db";
+    private static final String DATABASE_NAME = "pocketbook.db";
     private static final int DATABASE_VERSION = 1;
 
     private static final String ID_NAME = "_id";

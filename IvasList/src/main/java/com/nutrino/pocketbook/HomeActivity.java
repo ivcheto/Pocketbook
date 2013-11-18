@@ -1,4 +1,4 @@
-package com.eipipuz.ivaslist;
+package com.nutrino.pocketbook;
 
 import android.app.Activity;
 import android.app.AlertDialog;

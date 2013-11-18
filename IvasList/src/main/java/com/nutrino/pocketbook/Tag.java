@@ -1,4 +1,4 @@
-package com.eipipuz.ivaslist;
+package com.nutrino.pocketbook;
 
 public class Tag {
     private int mId;
