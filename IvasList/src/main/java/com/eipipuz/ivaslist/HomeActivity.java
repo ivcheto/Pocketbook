@@ -10,9 +10,11 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -73,17 +75,7 @@ public class HomeActivity extends Activity implements View.OnTouchListener {
         final Builder alertDialogBuilder = new Builder(view.getContext());
         alertDialogBuilder.setView(addTagView);
         alertDialogBuilder.setTitle(R.string.add_tag_title);
-        alertDialogBuilder.setPositiveButton(R.string.add_tag_ok_button, new OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int id) {
-                EditText editText = (EditText) addTagView.findViewById(R.id.tag_name_input);
-                final String tagName = editText.getText().toString();
-                final Tag tag = mTagsDataSource.createTag(tagName);
-
-                final AppAdapter adapter = (AppAdapter) mListView.getAdapter();
-                adapter.add(tag);
-            }
-        });
+        alertDialogBuilder.setPositiveButton(R.string.add_tag_ok_button, null);
         alertDialogBuilder.setNegativeButton(R.string.add_tag_cancel_button, new OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int id) {
@@ -92,6 +84,30 @@ public class HomeActivity extends Activity implements View.OnTouchListener {
         });
 
         final AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface dialogInterface) {
+                Button positive = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                positive.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        EditText editText = (EditText) addTagView.findViewById(R.id.tag_name_input);
+                        final String tagName = editText.getText().toString();
+
+                        if(!tagName.equals("")) {
+                            final Tag tag = mTagsDataSource.createTag(tagName);
+
+                            final AppAdapter adapter = (AppAdapter) mListView.getAdapter();
+                            adapter.add(tag);
+                            alertDialog.dismiss();
+                        } else {
+                            TextView errorMessage = (TextView) addTagView.findViewById(R.id.tag_error_no_name);
+                            errorMessage.setVisibility(View.VISIBLE);
+                        }
+                    }
+                });
+            }
+        });
         alertDialog.show();
     }
 

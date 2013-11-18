@@ -10,4 +10,14 @@
             android:hint="@string/tag_name_hint"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text='@string/error_no_name'
+        android:id="@+id/tag_error_no_name"
+        android:textColor="@color/error"
+        android:visibility="invisible"
+        android:layout_gravity="left|center_vertical" />
 </LinearLayout>

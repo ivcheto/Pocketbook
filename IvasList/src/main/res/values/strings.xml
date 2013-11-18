@@ -8,9 +8,6 @@
     <string name="add_tag_ok_button">@android:string/ok</string>
     <string name="add_tag_cancel_button">@android:string/cancel</string>
     <string name="tag_name_hint">Name of the tag</string>
-    
-    <!-- Colors -->
-    <color name="tag_selected">#ee7b5b</color>
-    <color name="tag_normal">#ff8c6c</color>
+    <string name="error_no_name">Please enter a name</string>
 
 </resources>
