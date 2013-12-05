@@ -20,20 +20,22 @@ import java.sql.SQLException;
 import java.util.List;
 
 import static android.app.AlertDialog.Builder;
-import static android.app.AlertDialog.OnClickListener;
+import static android.content.DialogInterface.OnClickListener;
 
-public class HomeActivity extends Activity implements View.OnTouchListener {
-    private static final String LOG_TAG = HomeActivity.class.getSimpleName();
+public class TagsActivity extends Activity implements View.OnTouchListener {
+    private static final String LOG_TAG = TagsActivity.class.getSimpleName();
     private TagsDataSource mTagsDataSource;
     private GestureDetector mGestureDetector;
     private AppGestureDetectorListener mAppGestureDetectorListener;
     private ListView mListView;
     public View mStartCircle, mEndCircle;
 
+    private int mCandidateForDeletion = -1;
+
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
+        setContentView(R.layout.items_list);
 
         mTagsDataSource = new TagsDataSource(this);
         mAppGestureDetectorListener = new AppGestureDetectorListener(this);
@@ -53,6 +55,9 @@ public class HomeActivity extends Activity implements View.OnTouchListener {
         mListView = (ListView)findViewById(R.id.list);
         mListView.setAdapter(adapter);
         mListView.setOnTouchListener(this);
+
+        TextView listName = (TextView)findViewById(R.id.list_title);
+        listName.setText(R.string.tags_label);
     }
 
     @Override
@@ -87,28 +92,30 @@ public class HomeActivity extends Activity implements View.OnTouchListener {
         alertDialog.setOnShowListener(new DialogInterface.OnShowListener() {
             @Override
             public void onShow(DialogInterface dialogInterface) {
-                Button positive = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
-                positive.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        EditText editText = (EditText) addTagView.findViewById(R.id.tag_name_input);
-                        final String tagName = editText.getText().toString();
+            Button positive = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
+            positive.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                EditText editText = (EditText) addTagView.findViewById(R.id.tag_name_input);
+                final String tagName = editText.getText().toString();
 
-                        if(!tagName.equals("")) {
-                            final Tag tag = mTagsDataSource.createTag(tagName);
+                if(!tagName.equals("")) {
+                    final Tag tag = mTagsDataSource.createTag(tagName);
 
-                            final AppAdapter adapter = (AppAdapter) mListView.getAdapter();
-                            adapter.add(tag);
-                            alertDialog.dismiss();
-                        } else {
-                            TextView errorMessage = (TextView) addTagView.findViewById(R.id.tag_error_no_name);
-                            errorMessage.setVisibility(View.VISIBLE);
-                        }
-                    }
-                });
+                    final AppAdapter adapter = (AppAdapter)mListView.getAdapter();
+                    adapter.add(tag);
+                    alertDialog.dismiss();
+                } else {
+                    TextView errorMessage = (TextView)addTagView.findViewById(R.id.tag_error_no_name);
+                    errorMessage.setVisibility(View.VISIBLE);
+                }
+                }
+            });
             }
         });
         alertDialog.show();
+
+
     }
 
     @Override
@@ -116,8 +123,6 @@ public class HomeActivity extends Activity implements View.OnTouchListener {
         mGestureDetector.onTouchEvent(motionEvent);
         return super.onTouchEvent(motionEvent);
     }
-
-    private int mCandidateForDeletion = -1;
 
     public void markCandidateForDeletion(int candidatePosition) {
         mCandidateForDeletion = candidatePosition;

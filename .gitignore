@@ -4,3 +4,5 @@
 IvasList/build/
 IvasList/libs/
 local.properties
+IvasList/src/main/gen/
+IvasList/src/main/main.iml

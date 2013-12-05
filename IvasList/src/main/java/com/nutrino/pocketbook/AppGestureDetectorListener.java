@@ -6,10 +6,10 @@ import android.view.MotionEvent;
 public class AppGestureDetectorListener extends GestureDetector.SimpleOnGestureListener {
     private static final float MIN_X_DELTA_THRESHOLD = 300;
     private static final float MAX_Y_DELTA_THRESHOLD = 60;
-    private HomeActivity mHomeActivity;
+    private TagsActivity mTagsActivity;
 
-    public AppGestureDetectorListener(HomeActivity homeActivity) {
-        mHomeActivity = homeActivity;
+    public AppGestureDetectorListener(TagsActivity tagsActivity) {
+        mTagsActivity = tagsActivity;
     }
 
     @Override
@@ -18,11 +18,11 @@ public class AppGestureDetectorListener extends GestureDetector.SimpleOnGestureL
         final float yDelta = motionEvent2.getRawY() - motionEvent.getRawY();
         if (xDelta > MIN_X_DELTA_THRESHOLD) {
             if (yDelta < MAX_Y_DELTA_THRESHOLD) {
-                mHomeActivity.deleteMarkedTag();
+                mTagsActivity.deleteMarkedTag();
                 return true;
             }
         }
-        mHomeActivity.moveMarkedTag(v);
+        mTagsActivity.moveMarkedTag(v);
         return false;
     }
 }

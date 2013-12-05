@@ -1,6 +1,8 @@
 package com.nutrino.pocketbook;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -14,7 +16,7 @@ import java.util.List;
 public class AppAdapter extends ArrayAdapter<Tag> {
     private List<Tag> mItems;
 
-    public AppAdapter(HomeActivity context, int textViewResourceId, List<Tag> objects) {
+    public AppAdapter(TagsActivity context, int textViewResourceId, List<Tag> objects) {
         super(context, textViewResourceId, objects);
         mItems = objects;
     }
@@ -26,27 +28,41 @@ public class AppAdapter extends ArrayAdapter<Tag> {
             convertView = li.inflate(R.layout.list_tag, null);
         }
 
-        Tag tag = mItems.get(position);
+        final Tag tag = mItems.get(position);
         if (tag != null) {
             LinearLayout view = (LinearLayout)convertView.findViewById(R.id.list_tag_body);
             if (view != null) {
                 TextView textView = (TextView) view.findViewById(R.id.list_tag_name);
                 textView.setText(tag.getName());
             }
-        }
 
-        convertView.setTag("" + position);
-        convertView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
-                    HomeActivity homeActivity = (HomeActivity)getContext();
+
+            convertView.setTag("" + position);
+
+            convertView.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View view, MotionEvent motionEvent) {
+                    if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+                    TagsActivity tagsActivity = (TagsActivity)getContext();
                     int candidatePosition = Integer.parseInt((String)view.getTag());
-                    homeActivity.markCandidateForDeletion(candidatePosition);
+                    tagsActivity.markCandidateForDeletion(candidatePosition);
                 }
                 return false;
             }
-        });
+            });
+
+            convertView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    Intent openNotesList = new Intent(getContext(), NotesActivity.class);
+                    Bundle extras = new Bundle();
+                    extras.putString(getContext().getString(R.string.tag_list_title), tag.getName());
+                    openNotesList.putExtras(extras);
+                    getContext().startActivity(openNotesList);
+                }
+            });
+        }
 
         return convertView;
     }

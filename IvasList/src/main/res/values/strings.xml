@@ -9,5 +9,6 @@
     <string name="add_tag_cancel_button">@android:string/cancel</string>
     <string name="tag_name_hint">Name of the tag</string>
     <string name="error_no_name">Please enter a name</string>
+    <string name="tag_list_title">taglistTitle</string>
 
 </resources>
