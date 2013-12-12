@@ -16,7 +16,7 @@ import java.util.List;
 public class AppAdapter extends ArrayAdapter<Tag> {
     private List<Tag> mItems;
 
-    public AppAdapter(TagsActivity context, int textViewResourceId, List<Tag> objects) {
+    public AppAdapter(TagListActivity context, int textViewResourceId, List<Tag> objects) {
         super(context, textViewResourceId, objects);
         mItems = objects;
     }
@@ -43,9 +43,9 @@ public class AppAdapter extends ArrayAdapter<Tag> {
                 @Override
                 public boolean onTouch(View view, MotionEvent motionEvent) {
                     if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
-                    TagsActivity tagsActivity = (TagsActivity)getContext();
+                    TagListActivity tagListActivity = (TagListActivity)getContext();
                     int candidatePosition = Integer.parseInt((String)view.getTag());
-                    tagsActivity.markCandidateForDeletion(candidatePosition);
+                    tagListActivity.markCandidateForDeletion(candidatePosition);
                 }
                 return false;
             }
@@ -55,7 +55,7 @@ public class AppAdapter extends ArrayAdapter<Tag> {
                 @Override
                 public void onClick(View view) {
 
-                    Intent openNotesList = new Intent(getContext(), NotesActivity.class);
+                    Intent openNotesList = new Intent(getContext(), NoteListActivity.class);
                     Bundle extras = new Bundle();
                     extras.putString(getContext().getString(R.string.tag_list_title), tag.getName());
                     openNotesList.putExtras(extras);

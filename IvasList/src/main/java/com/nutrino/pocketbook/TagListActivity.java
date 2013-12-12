@@ -22,8 +22,8 @@ import java.util.List;
 import static android.app.AlertDialog.Builder;
 import static android.content.DialogInterface.OnClickListener;
 
-public class TagsActivity extends Activity implements View.OnTouchListener {
-    private static final String LOG_TAG = TagsActivity.class.getSimpleName();
+public class TagListActivity extends Activity implements View.OnTouchListener {
+    private static final String LOG_TAG = TagListActivity.class.getSimpleName();
     private TagsDataSource mTagsDataSource;
     private GestureDetector mGestureDetector;
     private AppGestureDetectorListener mAppGestureDetectorListener;
@@ -72,7 +72,7 @@ public class TagsActivity extends Activity implements View.OnTouchListener {
         super.onDestroy();
     }
 
-    public void addTag(final View view) {
+    public void add(final View view) {
         Log.i(LOG_TAG, "create new tag");
 
         final LayoutInflater li = getLayoutInflater();
@@ -114,8 +114,6 @@ public class TagsActivity extends Activity implements View.OnTouchListener {
             }
         });
         alertDialog.show();
-
-
     }
 
     @Override
