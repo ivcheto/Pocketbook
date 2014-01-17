@@ -25,7 +25,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/add_tag_button"
                 android:layout_alignParentRight="true"
-                android:id="@+id/button"
+                android:id="@+id/add_new_button"
                 android:onClick="add"
                 />
 

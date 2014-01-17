@@ -13,6 +13,9 @@ import android.widget.TextView;
 
 import java.util.List;
 
+/*
+ * Connnects the view with the datasouce
+ */
 public class AppAdapter extends ArrayAdapter<Tag> {
     private List<Tag> mItems;
 
@@ -21,11 +24,14 @@ public class AppAdapter extends ArrayAdapter<Tag> {
         mItems = objects;
     }
 
+    /*
+     *
+     */
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
             LayoutInflater li = (LayoutInflater)getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = li.inflate(R.layout.list_tag, null);
+            convertView = li.inflate(R.layout.list_item, null);
         }
 
         final Tag tag = mItems.get(position);
@@ -43,12 +49,12 @@ public class AppAdapter extends ArrayAdapter<Tag> {
                 @Override
                 public boolean onTouch(View view, MotionEvent motionEvent) {
                     if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
-                    TagListActivity tagListActivity = (TagListActivity)getContext();
-                    int candidatePosition = Integer.parseInt((String)view.getTag());
-                    tagListActivity.markCandidateForDeletion(candidatePosition);
+                        TagListActivity tagListActivity = (TagListActivity)getContext();
+                        int candidatePosition = Integer.parseInt((String)view.getTag());
+                        tagListActivity.markCandidateForDeletion(candidatePosition);
+                    }
+                    return false;
                 }
-                return false;
-            }
             });
 
             convertView.setOnClickListener(new View.OnClickListener() {

@@ -1,7 +1,6 @@
 package com.nutrino.pocketbook;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,7 +15,7 @@ public class NoteListActivity extends Activity {
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.items_list);
+        setContentView(R.layout.list);
 
         TextView listName = (TextView) findViewById(R.id.list_title);
         Bundle extras = getIntent().getExtras();

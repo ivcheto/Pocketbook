@@ -35,7 +35,7 @@ public class TagListActivity extends Activity implements View.OnTouchListener {
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.items_list);
+        setContentView(R.layout.list);
 
         mTagsDataSource = new TagsDataSource(this);
         mAppGestureDetectorListener = new AppGestureDetectorListener(this);
@@ -50,7 +50,7 @@ public class TagListActivity extends Activity implements View.OnTouchListener {
         }
 
         final List<Tag> tags = mTagsDataSource.getAllTags();
-        final AppAdapter adapter = new AppAdapter(this, R.layout.list_tag, tags);
+        final AppAdapter adapter = new AppAdapter(this, R.layout.list_item, tags);
 
         mListView = (ListView)findViewById(R.id.list);
         mListView.setAdapter(adapter);
@@ -72,6 +72,9 @@ public class TagListActivity extends Activity implements View.OnTouchListener {
         super.onDestroy();
     }
 
+    /*
+     * Called by add_new_button in list.xml to add a new list_item to the list
+     */
     public void add(final View view) {
         Log.i(LOG_TAG, "create new tag");
 

@@ -13,10 +13,17 @@
 
     <EditText
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_height="428dp"
         android:inputType="textMultiLine"
         android:id="@+id/note_text_field"
         android:paddingTop="40sp"
         android:hint="Let's hear the details..." />
+
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:text="Save"
+        android:id="@+id/save_note_button" />
+
 
 </LinearLayout>
