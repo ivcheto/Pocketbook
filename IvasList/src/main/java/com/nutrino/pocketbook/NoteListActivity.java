@@ -7,9 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
-/**
- * Created by ivayladermendjeva on 11/21/13.
- */
+
 public class NoteListActivity extends Activity {
     private static final String LOG_TAG = NoteListActivity.class.getSimpleName();
 

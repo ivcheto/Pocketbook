@@ -2,24 +2,25 @@ package com.nutrino.pocketbook;
 
 import java.util.Vector;
 
-/**
- * Created by ivayladermendjeva on 12/11/13.
- */
+
 public class Note {
 
-    private String name;
+    private String title;
     private Vector<NoteDetail> noteDetails;
 
-    public Note(String name){
-        this.name = name;
-        noteDetails = new Vector<NoteDetail>();
+    public String getTitle() {
+        return title;
     }
 
-    public String getName() {
-        return name;
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setNoteDetails(Vector<NoteDetail> details) {
+        this.noteDetails = details;
     }
 
     public String toString() {
-        return getName();
+        return getTitle();
     }
 }
